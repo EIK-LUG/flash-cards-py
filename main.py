@@ -7,8 +7,8 @@ import json
 class FlashCard():
 
     def __init__(self, question, answer):
-        #ToDo
-        raise NotImplementedError
+        self.question = question
+        self.answer = answer
 
     @property
     def get_question(self):
@@ -60,14 +60,15 @@ class DeckOfFlashCards():
 
     def get_random_card(self):
         """:returns A random card from self._cards."""
-        #ToDo
-        raise NotImplementedError
+        return self._cards[randint(0,len(self._cards)-1)]
+
 
     def _load_deck_from_json(self, json_obj):
         """Fills up self._cards with FlashCard objects.
          FlashCard constructor parameters read from json file."""
-        #ToDo
-        raise NotImplementedError
+        for key, item in json_obj.items():
+            self._cards.append(FlashCard(key,item))
+
 
     def _create_card(self):
         """Asks user for question and answer. These are used to create an instance of FlashCard and this is in turn
@@ -130,8 +131,9 @@ class FlashCardExercise():
         """
         while True:
             file_name = input("Please enter name of file with deck data: ")
-            #ToDo
-            raise NotImplementedError
+            with open(file_name) as json_file:
+                json_data = json.load(json_file)
+                return DeckOfFlashCards(json_data)
 
     def _ask_question(self):
         #ToDo
